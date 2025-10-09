@@ -1,5 +1,6 @@
 package com.edsonrego.taskmanager.service.impl;
 
+import com.edsonrego.taskmanager.exception.ResourceNotFoundException;
 import com.edsonrego.taskmanager.model.User;
 import com.edsonrego.taskmanager.repository.UserRepository;
 import com.edsonrego.taskmanager.service.UserService;
@@ -35,5 +36,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 }
