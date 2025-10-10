@@ -2,21 +2,24 @@ package com.edsonrego.taskmanager.controller;
 
 import com.edsonrego.taskmanager.model.Task;
 import com.edsonrego.taskmanager.repository.TaskRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TaskControllerIntegrationTest {
 
     @Autowired
@@ -25,38 +28,68 @@ class TaskControllerIntegrationTest {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private Task task;
+
     @BeforeEach
-    void setUp() {
+    void setup() {
         taskRepository.deleteAll();
+        task = new Task();
+        task.setTitle("Test Task");
+        task.setDescription("Test Description");
+        task.setCompleted(false);
+        task = taskRepository.save(task);
     }
 
     @Test
+    @WithMockUser(username = "testuser", roles = {"USER"})
+    void testGetAllTasks() throws Exception {
+        mockMvc.perform(get("/api/tasks"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title", is(task.getTitle())));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = {"USER"})
+    void testGetTaskById() throws Exception {
+        mockMvc.perform(get("/api/tasks/{id}", task.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is(task.getTitle())));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = {"USER"})
     void testCreateTask() throws Exception {
-        String taskJson = """
-                {
-                    "title": "Integration Test Task",
-                    "description": "Testing controller",
-                    "completed": false
-                }
-                """;
+        Task newTask = new Task();
+        newTask.setTitle("New Task");
+        newTask.setDescription("New Description");
+        newTask.setCompleted(false);
 
         mockMvc.perform(post("/api/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(taskJson))
+                        .content(objectMapper.writeValueAsString(newTask)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.title").value("Integration Test Task"));
+                .andExpect(jsonPath("$.title", is("New Task")));
     }
 
     @Test
-    void testGetAllTasks() throws Exception {
-        Task task = new Task();
-        task.setTitle("Existing Task");
-        task.setDescription("Already in DB");
-        task.setCompleted(false);
-        taskRepository.save(task);
+    @WithMockUser(username = "testuser", roles = {"USER"})
+    void testUpdateTask() throws Exception {
+        task.setTitle("Updated Title");
 
-        mockMvc.perform(get("/api/tasks"))
+        mockMvc.perform(put("/api/tasks/{id}", task.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(task)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("Existing Task"));
+                .andExpect(jsonPath("$.title", is("Updated Title")));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = {"USER"})
+    void testDeleteTask() throws Exception {
+        mockMvc.perform(delete("/api/tasks/{id}", task.getId()))
+                .andExpect(status().isNoContent());
     }
 }

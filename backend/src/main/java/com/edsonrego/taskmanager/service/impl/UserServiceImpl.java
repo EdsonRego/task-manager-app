@@ -4,33 +4,28 @@ import com.edsonrego.taskmanager.exception.ResourceNotFoundException;
 import com.edsonrego.taskmanager.model.User;
 import com.edsonrego.taskmanager.repository.UserRepository;
 import com.edsonrego.taskmanager.service.UserService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User createUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
     }
 
     @Override
@@ -39,8 +34,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+    public User updateUser(Long id, User userDetails) {
+        User user = getUserById(id);
+        user.setUsername(userDetails.getUsername());
+        user.setPassword(userDetails.getPassword());
+        user.setRole(userDetails.getRole());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        User user = getUserById(id);
+        userRepository.delete(user);
     }
 }

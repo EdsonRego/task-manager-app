@@ -1,7 +1,7 @@
 package com.edsonrego.taskmanager.service.impl;
 
-import com.edsonrego.taskmanager.model.Task;
 import com.edsonrego.taskmanager.exception.ResourceNotFoundException;
+import com.edsonrego.taskmanager.model.Task;
 import com.edsonrego.taskmanager.repository.TaskRepository;
 import com.edsonrego.taskmanager.service.TaskService;
 import org.springframework.stereotype.Service;
@@ -23,34 +23,29 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(Long id, Task taskDetails) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
-
-        task.setTitle(taskDetails.getTitle());
-        task.setDescription(taskDetails.getDescription());
-        task.setDueDate(taskDetails.getDueDate());
-        task.setCompleted(taskDetails.isCompleted());
-
-        return taskRepository.save(task);
-    }
-
-    @Override
-    public void deleteTask(Long id) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
-
-        taskRepository.delete(task);
-    }
-
-    @Override
     public Task getTaskById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + id));
     }
 
     @Override
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public Task updateTask(Long id, Task taskDetails) {
+        Task task = getTaskById(id);
+        task.setTitle(taskDetails.getTitle());
+        task.setDescription(taskDetails.getDescription());
+        task.setCompleted(taskDetails.isCompleted());
+        task.setDueDate(taskDetails.getDueDate());
+        return taskRepository.save(task);
+    }
+
+    @Override
+    public void deleteTask(Long id) {
+        Task task = getTaskById(id);
+        taskRepository.delete(task);
     }
 }

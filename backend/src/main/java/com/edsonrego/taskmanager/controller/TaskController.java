@@ -1,50 +1,56 @@
 package com.edsonrego.taskmanager.controller;
 
 import com.edsonrego.taskmanager.model.Task;
-import com.edsonrego.taskmanager.service.TaskService;
+import com.edsonrego.taskmanager.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-    private final TaskService taskService;
+    @Autowired
+    private TaskRepository taskRepository;
 
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
-
-    // GET all tasks
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
-        return ResponseEntity.ok(taskService.getAllTasks());
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
     }
 
-    // GET task by ID
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        return ResponseEntity.ok(taskService.getTaskById(id));
+        Optional<Task> task = taskRepository.findById(id);
+        return task.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // CREATE new task
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        return ResponseEntity.ok(taskService.createTask(task));
+        Task savedTask = taskRepository.save(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedTask);
     }
 
-    // UPDATE task
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
-        return ResponseEntity.ok(taskService.updateTask(id, task));
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task taskDetails) {
+        return taskRepository.findById(id).map(task -> {
+            task.setTitle(taskDetails.getTitle());
+            task.setDescription(taskDetails.getDescription());
+            task.setCompleted(taskDetails.isCompleted());
+            Task updatedTask = taskRepository.save(task);
+            return ResponseEntity.ok(updatedTask);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // DELETE task
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
-        return ResponseEntity.noContent().build();
+        return taskRepository.findById(id).map(task -> {
+            taskRepository.delete(task);
+            return ResponseEntity.noContent().<Void>build();
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

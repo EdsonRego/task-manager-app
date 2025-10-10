@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,16 +30,29 @@ class UserServiceTest {
     }
 
     @Test
+    void testCreateUser() {
+        User user = new User();
+        user.setUsername("john");
+        when(userRepository.save(user)).thenReturn(user);
+
+        User result = userService.createUser(user);
+
+        assertNotNull(result);
+        assertEquals("john", result.getUsername());
+        verify(userRepository, times(1)).save(user);
+    }
+
+    @Test
     void testGetUserById_Success() {
         User user = new User();
         user.setId(1L);
-        user.setUsername("admin");
+        user.setUsername("john");
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         User result = userService.getUserById(1L);
 
         assertNotNull(result);
-        assertEquals("admin", result.getUsername());
+        assertEquals("john", result.getUsername());
         verify(userRepository, times(1)).findById(1L);
     }
 
@@ -48,5 +62,17 @@ class UserServiceTest {
 
         assertThrows(ResourceNotFoundException.class, () -> userService.getUserById(99L));
         verify(userRepository, times(1)).findById(99L);
+    }
+
+    @Test
+    void testGetAllUsers() {
+        User user = new User();
+        user.setUsername("admin");
+        when(userRepository.findAll()).thenReturn(List.of(user));
+
+        List<User> result = userService.getAllUsers();
+
+        assertEquals(1, result.size());
+        assertEquals("admin", result.get(0).getUsername());
     }
 }
