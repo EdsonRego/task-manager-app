@@ -48,7 +48,7 @@ class TaskControllerIntegrationTest {
         taskRepository.save(task2);
     }
 
-    // ✅ Create
+    // ✅ Create task
     @Test
     @WithMockUser(username = "admin", roles = "USER")
     void shouldCreateTask() throws Exception {
@@ -63,11 +63,12 @@ class TaskControllerIntegrationTest {
         mockMvc.perform(post("/api/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(taskJson))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("New Task"));
+                .andExpect(status().isCreated()) // Ajustado para 201
+                .andExpect(jsonPath("$.title").value("New Task"))
+                .andExpect(jsonPath("$.completed").value(false));
     }
 
-    // ✅ Get all
+    // ✅ Get all tasks
     @Test
     @WithMockUser(username = "admin", roles = "USER")
     void shouldReturnAllTasks() throws Exception {
@@ -76,7 +77,7 @@ class TaskControllerIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(2)));
     }
 
-    // ✅ Get completed
+    // ✅ Get completed tasks
     @Test
     @WithMockUser(username = "admin", roles = "USER")
     void shouldReturnCompletedTasks() throws Exception {
@@ -85,7 +86,7 @@ class TaskControllerIntegrationTest {
                 .andExpect(jsonPath("$[0].completed").value(true));
     }
 
-    // ✅ Get pending
+    // ✅ Get pending tasks
     @Test
     @WithMockUser(username = "admin", roles = "USER")
     void shouldReturnPendingTasks() throws Exception {
@@ -94,7 +95,7 @@ class TaskControllerIntegrationTest {
                 .andExpect(jsonPath("$[0].completed").value(false));
     }
 
-    // ✅ Get overdue
+    // ✅ Get overdue tasks
     @Test
     @WithMockUser(username = "admin", roles = "USER")
     void shouldReturnOverdueTasks() throws Exception {
@@ -112,12 +113,27 @@ class TaskControllerIntegrationTest {
                 .andExpect(jsonPath("$[0].title").value("Finish project"));
     }
 
-    // ✅ Due soon (next 3 days)
+    // ✅ Tasks due soon (next 3 days)
     @Test
     @WithMockUser(username = "admin", roles = "USER")
     void shouldReturnTasksDueSoon() throws Exception {
         mockMvc.perform(get("/api/tasks/due-soon").param("days", "3"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].title").value("Finish project"));
+    }
+
+    // ✅ Delete task
+    @Test
+    @WithMockUser(username = "admin", roles = "USER")
+    void shouldDeleteTask() throws Exception {
+        Long idToDelete = taskRepository.findAll().get(0).getId();
+
+        mockMvc.perform(delete("/api/tasks/{id}", idToDelete))
+                .andExpect(status().isNoContent());
+
+        // Garantir que foi removida
+        mockMvc.perform(get("/api/tasks/{id}", idToDelete))
+                .andExpect(status().isNotFound());
     }
 }
