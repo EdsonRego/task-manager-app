@@ -6,6 +6,7 @@ import com.edsonrego.taskmanager.repository.TaskRepository;
 import com.edsonrego.taskmanager.service.TaskService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -47,5 +48,34 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(Long id) {
         Task task = getTaskById(id);
         taskRepository.delete(task);
+    }
+
+    // 🔍 Novos métodos com consultas diretas ao banco
+
+    @Override
+    public List<Task> getCompletedTasks() {
+        return taskRepository.findByCompleted(true);
+    }
+
+    @Override
+    public List<Task> getPendingTasks() {
+        return taskRepository.findByCompleted(false);
+    }
+
+    @Override
+    public List<Task> getOverdueTasks() {
+        return taskRepository.findByDueDateBefore(LocalDate.now());
+    }
+
+    @Override
+    public List<Task> searchTasks(String keyword) {
+        return taskRepository.searchByKeyword(keyword);
+    }
+
+    @Override
+    public List<Task> getTasksDueSoon(int days) {
+        LocalDate today = LocalDate.now();
+        LocalDate limit = today.plusDays(days);
+        return taskRepository.findByDueDateBetween(today, limit);
     }
 }

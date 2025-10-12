@@ -2,6 +2,7 @@ package com.edsonrego.taskmanager.repository;
 
 import com.edsonrego.taskmanager.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -10,15 +11,22 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    // Buscar todas as tasks concluídas
+    // ✅ Tarefas concluídas ou pendentes
     List<Task> findByCompleted(boolean completed);
 
-    // Buscar todas as tasks com data de vencimento anterior a uma data específica
+    // ✅ Tarefas vencidas
     List<Task> findByDueDateBefore(LocalDate date);
 
-    // Buscar todas as tasks com data de vencimento após uma data específica
+    // ✅ Tarefas com vencimento após uma data específica
     List<Task> findByDueDateAfter(LocalDate date);
 
-    // Buscar todas as tasks por título contendo palavra-chave (case insensitive)
-    List<Task> findByTitleContainingIgnoreCase(String keyword);
+    // ✅ Tarefas com vencimento entre duas datas
+    List<Task> findByDueDateBetween(LocalDate start, LocalDate end);
+
+    // ✅ Buscar por título OU descrição contendo palavra-chave (case-insensitive)
+    @Query("SELECT t FROM Task t WHERE LOWER(t.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(t.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Task> searchByKeyword(String keyword);
+
+
 }
