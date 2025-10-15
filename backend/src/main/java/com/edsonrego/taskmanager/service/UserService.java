@@ -1,19 +1,13 @@
 package com.edsonrego.taskmanager.service;
 
-import com.edsonrego.taskmanager.model.User;
-
+import com.edsonrego.taskmanager.dto.UserDTO;
+import com.edsonrego.taskmanager.dto.UserCreateDTO;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
-
-    User createUser(User user);
-
-    List<User> getAllUsers();
-
-    User getUserById(Long id);
-
-    User updateUser(Long id, User updatedUser);
-
+    UserDTO createUser(UserCreateDTO userCreateDTO);
+    List<UserDTO> getAllUsers();
+    UserDTO getUserById(Long id);
+    UserDTO updateUser(Long id, UserDTO updatedUserDTO);
     void deleteUser(Long id);
 }

@@ -1,6 +1,6 @@
 package com.edsonrego.taskmanager.controller;
 
-import com.edsonrego.taskmanager.model.Task;
+import com.edsonrego.taskmanager.dto.TaskDTO;
 import com.edsonrego.taskmanager.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,71 +14,60 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    // Constructor injection (recomendado)
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
-    // GET /api/tasks
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
+    public ResponseEntity<List<TaskDTO>> getAllTasks() {
         return ResponseEntity.ok(taskService.getAllTasks());
     }
 
-    // GET /api/tasks/{id}
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
-    // POST /api/tasks
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task created = taskService.createTask(task);
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
+        TaskDTO created = taskService.createTask(taskDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // PUT /api/tasks/{id}
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        Task updated = taskService.updateTask(id, updatedTask);
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
+        TaskDTO updated = taskService.updateTask(id, taskDTO);
         return ResponseEntity.ok(updated);
     }
 
-    // DELETE /api/tasks/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
 
-    // GET /api/tasks/completed
     @GetMapping("/completed")
-    public ResponseEntity<List<Task>> getCompletedTasks() {
+    public ResponseEntity<List<TaskDTO>> getCompletedTasks() {
         return ResponseEntity.ok(taskService.getCompletedTasks());
     }
 
-    // GET /api/tasks/pending
     @GetMapping("/pending")
-    public ResponseEntity<List<Task>> getPendingTasks() {
+    public ResponseEntity<List<TaskDTO>> getPendingTasks() {
         return ResponseEntity.ok(taskService.getPendingTasks());
     }
 
-    // GET /api/tasks/overdue
     @GetMapping("/overdue")
-    public ResponseEntity<List<Task>> getOverdueTasks() {
+    public ResponseEntity<List<TaskDTO>> getOverdueTasks() {
         return ResponseEntity.ok(taskService.getOverdueTasks());
     }
 
-    // GET /api/tasks/search?keyword=...
     @GetMapping("/search")
-    public ResponseEntity<List<Task>> searchTasks(@RequestParam("keyword") String keyword) {
+    public ResponseEntity<List<TaskDTO>> searchTasks(@RequestParam("keyword") String keyword) {
         return ResponseEntity.ok(taskService.searchTasks(keyword));
     }
 
-    // GET /api/tasks/due-soon?days=3
     @GetMapping("/due-soon")
-    public ResponseEntity<List<Task>> getTasksDueSoon(@RequestParam(defaultValue = "3") int days) {
+    public ResponseEntity<List<TaskDTO>> getTasksDueSoon(@RequestParam(defaultValue = "3") int days) {
         return ResponseEntity.ok(taskService.getTasksDueSoon(days));
     }
 }

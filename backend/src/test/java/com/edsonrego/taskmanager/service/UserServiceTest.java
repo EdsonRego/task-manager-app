@@ -1,6 +1,9 @@
 package com.edsonrego.taskmanager.service;
 
+import com.edsonrego.taskmanager.dto.UserCreateDTO;
+import com.edsonrego.taskmanager.dto.UserDTO;
 import com.edsonrego.taskmanager.exception.ResourceNotFoundException;
+import com.edsonrego.taskmanager.mapper.UserMapper;
 import com.edsonrego.taskmanager.model.User;
 import com.edsonrego.taskmanager.repository.UserRepository;
 import com.edsonrego.taskmanager.service.impl.UserServiceImpl;
@@ -16,6 +19,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Testes unitários para UserServiceImpl (camada de serviço).
+ * - Verifique se os imports referenciam os pacotes corretos do seu projeto.
+ */
 class UserServiceTest {
 
     @Mock
@@ -31,28 +38,52 @@ class UserServiceTest {
 
     @Test
     void testCreateUser() {
-        User user = new User();
-        user.setUsername("john");
-        when(userRepository.save(user)).thenReturn(user);
+        // Arrange: criar DTO de criação (inclui password)
+        UserCreateDTO dto = new UserCreateDTO();
+        dto.setName("Edson");
+        dto.setEmail("edson@example.com");
+        dto.setPassword("1234");
+        dto.setRole("ROLE_USER");
 
-        User result = userService.createUser(user);
+        // Entidade que o repositório deve retornar
+        User entity = new User();
+        entity.setId(1L);
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
+        entity.setPassword(dto.getPassword());
+        entity.setRole(dto.getRole());
 
+        // Mock: garantir que não existe e-mail e simular save
+        when(userRepository.existsByEmail(dto.getEmail())).thenReturn(false);
+        when(userRepository.save(any(User.class))).thenReturn(entity);
+
+        // Act
+        UserDTO result = userService.createUser(dto);
+
+        // Assert
         assertNotNull(result);
-        assertEquals("john", result.getUsername());
-        verify(userRepository, times(1)).save(user);
+        assertEquals("Edson", result.getName());
+        assertEquals("edson@example.com", result.getEmail());
+        assertEquals("ROLE_USER", result.getRole());
+
+        verify(userRepository, times(1)).existsByEmail(dto.getEmail());
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
     void testGetUserById_Success() {
         User user = new User();
         user.setId(1L);
-        user.setUsername("john");
+        user.setName("Edson");
+        user.setEmail("edson@example.com");
+
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        User result = userService.getUserById(1L);
+        UserDTO result = userService.getUserById(1L);
 
         assertNotNull(result);
-        assertEquals("john", result.getUsername());
+        assertEquals("Edson", result.getName());
+        assertEquals("edson@example.com", result.getEmail());
         verify(userRepository, times(1)).findById(1L);
     }
 
@@ -65,14 +96,61 @@ class UserServiceTest {
     }
 
     @Test
+    void testUpdateUser() {
+        User existing = new User();
+        existing.setId(1L);
+        existing.setName("Old Name");
+        existing.setEmail("old@example.com");
+
+        UserDTO updateDTO = new UserDTO();
+        updateDTO.setId(1L);
+        updateDTO.setName("New Name");
+        updateDTO.setEmail("new@example.com");
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(existing));
+        when(userRepository.save(any(User.class))).thenReturn(existing);
+
+        UserDTO result = userService.updateUser(1L, updateDTO);
+
+        assertEquals("New Name", result.getName());
+        assertEquals("new@example.com", result.getEmail());
+        verify(userRepository, times(1)).findById(1L);
+        verify(userRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    void testDeleteUser_Success() {
+        when(userRepository.existsById(1L)).thenReturn(true);
+
+        userService.deleteUser(1L);
+
+        verify(userRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void testDeleteUser_NotFound() {
+        when(userRepository.existsById(1L)).thenReturn(false);
+
+        assertThrows(Exception.class, () -> userService.deleteUser(1L));
+        verify(userRepository, times(1)).existsById(1L);
+        verify(userRepository, never()).deleteById(anyLong());
+    }
+
+    @Test
     void testGetAllUsers() {
-        User user = new User();
-        user.setUsername("admin");
-        when(userRepository.findAll()).thenReturn(List.of(user));
+        User user1 = new User("Edson", "edson@example.com", "1234", "ROLE_USER");
+        user1.setId(1L);
 
-        List<User> result = userService.getAllUsers();
+        User user2 = new User("Maria", "maria@example.com", "abcd", "ROLE_USER");
+        user2.setId(2L);
 
-        assertEquals(1, result.size());
-        assertEquals("admin", result.get(0).getUsername());
+        when(userRepository.findAll()).thenReturn(List.of(user1, user2));
+
+        List<UserDTO> result = userService.getAllUsers();
+
+        assertEquals(2, result.size());
+        assertEquals("Edson", result.get(0).getName());
+        assertEquals("Maria", result.get(1).getName());
+        verify(userRepository, times(1)).findAll();
     }
 }

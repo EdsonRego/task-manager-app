@@ -28,5 +28,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             "OR LOWER(t.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Task> searchByKeyword(String keyword);
 
-
+    // ✅ Buscar tarefas por usuário (útil para o frontend)
+    List<Task> findByUserId(Long userId);
 }

@@ -1,6 +1,11 @@
 package com.edsonrego.taskmanager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -10,57 +15,49 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String username;
+    @Column(nullable = false)
+    private String name;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
+    // Alinhado com testes (sem prefixo ROLE_)
     @Column(nullable = false)
-    private String role;
+    private String role = "USER";
 
-    // --- Construtores ---
-    public User() {
-    }
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<com.edsonrego.taskmanager.model.Task> tasks = new ArrayList<>();
 
-    public User(Long id, String username, String password, String role) {
-        this.id = id;
-        this.username = username;
+    public User() {}
+
+    public User(String name, String email, String password, String role) {
+        this.name = name;
+        this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    // --- Getters ---
-    public Long getId() {
-        return id;
-    }
+    // Getters / Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getUsername() {
-        return username;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getRole() {
-        return role;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
-    // --- Setters ---
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+    public List<com.edsonrego.taskmanager.model.Task> getTasks() { return tasks; }
+    public void setTasks(List<com.edsonrego.taskmanager.model.Task> tasks) { this.tasks = tasks; }
 }

@@ -14,16 +14,36 @@ public class Task {
     @Column(nullable = false)
     private String title;
 
-    @Column(columnDefinition = "text")
     private String description;
 
+    @Column(name = "due_date")
     private LocalDate dueDate;
 
     @Column(nullable = false)
     private boolean completed = false;
 
-    // --- Getters e Setters manuais (para evitar problemas com Lombok) ---
+    // 🔹 Adicionando relacionamento com User
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
+    // =============================
+    // ✅ Construtores
+    // =============================
+    public Task() {
+    }
+
+    public Task(String title, String description, LocalDate dueDate, boolean completed, User user) {
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.completed = completed;
+        this.user = user;
+    }
+
+    // =============================
+    // ✅ Getters e Setters
+    // =============================
     public Long getId() {
         return id;
     }
@@ -62,5 +82,13 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
