@@ -1,136 +1,165 @@
 {
   "info": {
-    "name": "Task Manager API",
-    "_postman_id": "edsonrego-taskmanager-collection",
-    "description": "Coleção de testes para o backend Task Manager (Spring Boot)",
+    "name": "Task Manager API - Dev",
+    "_postman_id": "edsonrego-taskmanager-collection-dev",
+    "description": "Coleção de testes para o backend Task Manager (Spring Boot) - perfil dev",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Criar tarefa",
+      "name": "Listar todos os usuários",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "users"]
+        }
+      }
+    },
+    {
+      "name": "Buscar usuário por ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8081/api/users/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "users", "1"]
+        }
+      }
+    },
+    {
+      "name": "Criar novo usuário",
       "request": {
         "method": "POST",
         "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
+          { "key": "Content-Type", "value": "application/json" }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"title\": \"Test Task\",\n  \"description\": \"Testando criação de tarefas\",\n  \"completed\": false,\n  \"dueDate\": \"2025-10-15\"\n}"
+          "raw": "{\n  \"name\": \"Edson\",\n  \"email\": \"edson@example.com\",\n  \"password\": \"1234\",\n  \"role\": \"ROLE_USER\"\n}"
         },
         "url": {
-          "raw": "http://localhost:8080/api/tasks",
+          "raw": "http://localhost:8081/api/users",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "tasks"]
+          "port": "8081",
+          "path": ["api", "users"]
         }
-      },
-      "response": []
+      }
+    },
+    {
+      "name": "Atualizar usuário",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"name\": \"Edson Rego\",\n  \"email\": \"edson.rego@example.com\",\n  \"role\": \"ROLE_ADMIN\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/users/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "users", "1"]
+        }
+      }
+    },
+    {
+      "name": "Excluir usuário",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8081/api/users/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "users", "1"]
+        }
+      }
     },
     {
       "name": "Listar todas tarefas",
       "request": {
         "method": "GET",
-        "header": [],
         "url": {
-          "raw": "http://localhost:8080/api/tasks",
+          "raw": "http://localhost:8081/api/tasks",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "8080",
+          "port": "8081",
           "path": ["api", "tasks"]
         }
-      },
-      "response": []
+      }
     },
     {
-      "name": "Listar tarefas concluídas",
+      "name": "Buscar tarefa por ID",
       "request": {
         "method": "GET",
-        "header": [],
         "url": {
-          "raw": "http://localhost:8080/api/tasks/completed",
+          "raw": "http://localhost:8081/api/tasks/1",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "tasks", "completed"]
+          "port": "8081",
+          "path": ["api", "tasks", "1"]
         }
-      },
-      "response": []
+      }
     },
     {
-      "name": "Listar tarefas pendentes",
+      "name": "Criar tarefa",
       "request": {
-        "method": "GET",
-        "header": [],
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Test Task\",\n  \"description\": \"Testando criação de tarefas\",\n  \"completed\": false,\n  \"dueDate\": \"2025-10-15\"\n}"
+        },
         "url": {
-          "raw": "http://localhost:8080/api/tasks/pending",
+          "raw": "http://localhost:8081/api/tasks",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "tasks", "pending"]
+          "port": "8081",
+          "path": ["api", "tasks"]
         }
-      },
-      "response": []
+      }
     },
     {
-      "name": "Listar tarefas vencidas",
+      "name": "Atualizar tarefa",
       "request": {
-        "method": "GET",
-        "header": [],
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Task\",\n  \"description\": \"Atualizando tarefa\",\n  \"completed\": true,\n  \"dueDate\": \"2025-10-20\"\n}"
+        },
         "url": {
-          "raw": "http://localhost:8080/api/tasks/overdue",
+          "raw": "http://localhost:8081/api/tasks/1",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "tasks", "overdue"]
+          "port": "8081",
+          "path": ["api", "tasks", "1"]
         }
-      },
-      "response": []
+      }
     },
     {
-      "name": "Buscar tarefas por palavra-chave",
+      "name": "Deletar tarefa",
       "request": {
-        "method": "GET",
-        "header": [],
+        "method": "DELETE",
         "url": {
-          "raw": "http://localhost:8080/api/tasks/search?keyword=Test",
+          "raw": "http://localhost:8081/api/tasks/1",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "tasks", "search"],
-          "query": [
-            {
-              "key": "keyword",
-              "value": "Test"
-            }
-          ]
+          "port": "8081",
+          "path": ["api", "tasks", "1"]
         }
-      },
-      "response": []
-    },
-    {
-      "name": "Listar tarefas com vencimento próximo",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/api/tasks/due-soon?days=3",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "tasks", "due-soon"],
-          "query": [
-            {
-              "key": "days",
-              "value": "3"
-            }
-          ]
-        }
-      },
-      "response": []
+      }
     }
   ]
 }

@@ -1,0 +1,213 @@
+{
+  "info": {
+    "name": "Task Manager API - Test",
+    "_postman_id": "edsonrego-taskmanager-collection-test",
+    "description": "Coleção de testes para o backend Task Manager (Spring Boot) - perfil test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "health"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Status Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/status",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "status"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "List All Users",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8081/api/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "users"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Edson\",\n  \"email\": \"edson@example.com\",\n  \"password\": \"1234\",\n  \"role\": \"ROLE_USER\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "users"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "List All Tasks",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8081/api/tasks",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "tasks"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Test Task\",\n  \"description\": \"Testando criação de tarefas\",\n  \"completed\": false,\n  \"dueDate\": \"2025-10-15\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/tasks",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "tasks"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Task by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8081/api/tasks/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "tasks", "1"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Task",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Task\",\n  \"description\": \"Atualizando tarefa\",\n  \"completed\": true,\n  \"dueDate\": \"2025-10-20\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/tasks/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "tasks", "1"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Task",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8081/api/tasks/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "tasks", "1"]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "testuser" },
+            { "key": "password", "value": "testpass" }
+          ]
+        }
+      }
+    }
+  ]
+}

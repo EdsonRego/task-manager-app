@@ -96,6 +96,120 @@ Portfolio project showcasing a full-stack web application.
 
 This README reflects the current status of the project and the next steps for completing the full-stack Task Manager App.
 
+## Como Testar
+
+### Perfil Teste Backend
+
+Este subtópico descreve como executar e testar o backend do Task Manager no **perfil de teste (`test`)**, usando a base de dados H2 em memória.
+
+#### Requisitos
+- Java 17 instalado e configurado no PATH.
+- Maven instalado.
+- Docker Desktop instalado e em execução (para uso de containers, se necessário).
+- Postman instalado para testes dos endpoints.
+- Porta **8081** disponível para a aplicação.
+
+#### Passo a Passo
+
+1. **Verificar o Docker Desktop**
+    - Abra o Docker Desktop e verifique se ele está ativo.
+    - Caso queira usar PostgreSQL ou outros serviços em container, eles podem ser iniciados via `docker-compose`.
+
+2. **Executar Docker Compose (opcional)**  
+    -  for necessário subir serviços auxiliares (ex.: PostgreSQL), execute:
+
+   docker-compose up -d
+
+    - Verifique se o container subiu corretamente:
+
+   docker ps
+
+    - Confirme se as portas do container não estão em conflito com a aplicação (no perfil de teste geralmente não é necessário, pois usamos H2).
+
+3. **Limpar build e compilar sem executar testes**
+
+   mvn clean package -DskipTests
+
+    - Isso garante que todas as classes e recursos estejam atualizados sem rodar os testes unitários/integrados.
+   
+4. **Subir a aplicação no perfil de teste**
+
+   mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=test --server.port=8081"
+
+    - A aplicação iniciará com o perfil de teste, utilizando a base H2 em memória.
+
+   - O endpoint padrão /api/users deve retornar o usuário inicial de teste (admin@example.com) criado automaticamente.
+
+5. **Carregar a collection do Postman**
+
+    - Abra o Postman.
+
+   - Importe o arquivo TaskManagerCollection.json (versão para perfil de teste).
+
+   - Confirme que todos os endpoints estão presentes e apontando para http://localhost:8081/api/....
+
+6. **Sequência de testes sugerida**
+
+    - Recomenda-se testar os endpoints na seguinte ordem lógica:
+
+    1. GET /api/health — verifica se a aplicação está rodando.
+    
+    2. GET /api/status — verifica informações de status.
+    
+    3. GET /api/users — lista usuários existentes.
+    
+    4. POST /api/users — cria um novo usuário de teste.
+    
+    5. GET /api/users/{id} — consulta usuário específico.
+    
+    6. PUT /api/users/{id} — atualiza usuário.
+
+    7. DELETE /api/users/{id} — remove usuário.
+    
+    8. GET /api/tasks — lista todas as tarefas.
+    
+    9. POST /api/tasks — cria nova tarefa.
+    
+    10. GET /api/tasks/{id} — consulta tarefa específica.
+    
+    11. PUT /api/tasks/{id} — atualiza tarefa.
+    
+    12. DELETE /api/tasks/{id} — remove tarefa.
+    
+    - Endpoints específicos:
+    
+    1. GET /api/tasks/completed
+    
+    2. GET /api/tasks/pending
+    
+    3. GET /api/tasks/overdue
+    
+    4. GET /api/tasks/search?keyword=...
+
+    5. GET /api/tasks/due-soon?days=...
+
+7. **Pontos importantes**
+
+    - No perfil de teste, a base de dados é em memória (H2), portanto todos os dados são apagados ao reiniciar a aplicação.
+
+   - Certifique-se de que nenhuma outra aplicação esteja ocupando a porta 8081.
+
+   - Para qualquer teste envolvendo segurança, o perfil test libera todos os endpoints sem autenticação.
+
+   - Logs detalhados podem ser encontrados em logs/test-execution.log.
+
+8. **Finalizando a aplicação**
+
+    - Para parar a aplicação rodando via Maven:
+    
+    CTRL + C
+
+    - Para parar containers Docker (se utilizados):
+
+    docker-compose down
+
+    - Seguindo essa sequência, é possível testar todos os endpoints do backend de forma confiável, garantindo que a aplicação esteja funcional no perfil de teste.
+
 
 ```bash
 

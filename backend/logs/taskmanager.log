@@ -1,66 +1,68 @@
-2025-10-14T13:55:11.439-03:00  INFO 18716 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Starting TaskManagerBackendApplicationTests using Java 17.0.7 with PID 18716 (started by edson in C:\ws-portfolio\task-manager-app\backend)
-2025-10-14T13:55:11.449-03:00 DEBUG 18716 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-14T13:55:11.450-03:00  INFO 18716 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : No active profile set, falling back to 1 default profile: "default"
-2025-10-14T13:55:11.811-03:00  INFO 18716 --- [Task Manager Backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-10-14T13:55:11.855-03:00  INFO 18716 --- [Task Manager Backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33 ms. Found 2 JPA repository interfaces.
-2025-10-14T13:55:12.090-03:00  INFO 18716 --- [Task Manager Backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-10-14T13:55:12.096-03:00  INFO 18716 --- [Task Manager Backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-10-14T13:55:12.120-03:00  INFO 18716 --- [Task Manager Backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-10-14T13:55:12.123-03:00  INFO 18716 --- [Task Manager Backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Starting...
-2025-10-14T13:55:12.128-03:00  INFO 18716 --- [Task Manager Backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-12 - Added connection conn91: url=jdbc:h2:mem:eb643ec7-0c24-4e17-805e-17d6cf9226cb user=SA
-2025-10-14T13:55:12.130-03:00  INFO 18716 --- [Task Manager Backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Start completed.
-2025-10-14T13:55:12.190-03:00  INFO 18716 --- [Task Manager Backend] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-12)']
+2025-10-15T08:26:27.294-03:00  INFO 16252 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Starting TaskManagerBackendApplicationTests using Java 17.0.7 with PID 16252 (started by edson in C:\ws-portfolio\task-manager-app\backend)
+2025-10-15T08:26:27.302-03:00 DEBUG 16252 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-15T08:26:27.303-03:00  INFO 16252 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : No active profile set, falling back to 1 default profile: "default"
+2025-10-15T08:26:28.231-03:00  INFO 16252 --- [Task Manager Backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-15T08:26:28.388-03:00  INFO 16252 --- [Task Manager Backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 128 ms. Found 2 JPA repository interfaces.
+2025-10-15T08:26:29.430-03:00  INFO 16252 --- [Task Manager Backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-15T08:26:29.580-03:00  INFO 16252 --- [Task Manager Backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-10-15T08:26:29.684-03:00  INFO 16252 --- [Task Manager Backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-15T08:26:30.003-03:00  INFO 16252 --- [Task Manager Backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-15T08:26:30.060-03:00  INFO 16252 --- [Task Manager Backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-15T08:26:30.542-03:00  INFO 16252 --- [Task Manager Backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:f09cfd1d-85f4-4238-8a42-fee19723b207 user=SA
+2025-10-15T08:26:30.545-03:00  INFO 16252 --- [Task Manager Backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-15T08:26:30.632-03:00  INFO 16252 --- [Task Manager Backend] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-10-14T13:55:12.271-03:00  INFO 18716 --- [Task Manager Backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-10-14T13:55:12.315-03:00  INFO 18716 --- [Task Manager Backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-10-14T13:55:12.491-03:00  WARN 18716 --- [Task Manager Backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-14T13:55:12.697-03:00  WARN 18716 --- [Task Manager Backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+2025-10-15T08:26:31.863-03:00  INFO 16252 --- [Task Manager Backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-15T08:26:31.963-03:00  INFO 16252 --- [Task Manager Backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-15T08:26:32.597-03:00  INFO 16252 --- [Task Manager Backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-15T08:26:33.831-03:00  WARN 16252 --- [Task Manager Backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-15T08:26:34.653-03:00  WARN 16252 --- [Task Manager Backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 40295d00-4828-4187-a2e3-ee27f89460de
+Using generated security password: da31fcb9-8bb3-423a-a9cc-74b9e10509db
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-10-14T13:55:12.699-03:00  INFO 18716 --- [Task Manager Backend] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-10-14T13:55:12.788-03:00  INFO 18716 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Started TaskManagerBackendApplicationTests in 1.437 seconds (process running for 24.04)
-2025-10-14T13:55:12.877-03:00  INFO 18716 --- [Task Manager Backend] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-10-14T13:55:12.879-03:00  INFO 18716 --- [Task Manager Backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown initiated...
-2025-10-14T13:55:12.882-03:00  INFO 18716 --- [Task Manager Backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown completed.
-2025-10-14T13:57:59.201-03:00  INFO 27944 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Starting TaskManagerBackendApplicationTests using Java 17.0.7 with PID 27944 (started by edson in C:\ws-portfolio\task-manager-app\backend)
-2025-10-14T13:57:59.203-03:00 DEBUG 27944 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-14T13:57:59.205-03:00  INFO 27944 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : No active profile set, falling back to 1 default profile: "default"
-2025-10-14T13:57:59.545-03:00  INFO 27944 --- [Task Manager Backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-10-14T13:57:59.583-03:00  INFO 27944 --- [Task Manager Backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 2 JPA repository interfaces.
-2025-10-14T13:57:59.792-03:00  INFO 27944 --- [Task Manager Backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-10-14T13:57:59.801-03:00  INFO 27944 --- [Task Manager Backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-10-14T13:57:59.827-03:00  INFO 27944 --- [Task Manager Backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-10-14T13:57:59.830-03:00  INFO 27944 --- [Task Manager Backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Starting...
-2025-10-14T13:57:59.838-03:00  INFO 27944 --- [Task Manager Backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-12 - Added connection conn79: url=jdbc:h2:mem:46595948-da2d-47b0-9f0a-9e14e2943b47 user=SA
-2025-10-14T13:57:59.840-03:00  INFO 27944 --- [Task Manager Backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Start completed.
-2025-10-14T13:57:59.896-03:00  INFO 27944 --- [Task Manager Backend] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-12)']
+2025-10-15T08:26:34.683-03:00  INFO 16252 --- [Task Manager Backend] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-10-15T08:26:34.912-03:00  INFO 16252 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Started TaskManagerBackendApplicationTests in 7.698 seconds (process running for 13.837)
+2025-10-15T08:26:35.202-03:00  INFO 16252 --- [Task Manager Backend] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-15T08:26:35.205-03:00  INFO 16252 --- [Task Manager Backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-15T08:26:35.207-03:00  INFO 16252 --- [Task Manager Backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-15T08:28:15.864-03:00  INFO 9228 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Starting TaskManagerBackendApplicationTests using Java 17.0.7 with PID 9228 (started by edson in C:\ws-portfolio\task-manager-app\backend)
+2025-10-15T08:28:15.866-03:00 DEBUG 9228 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-15T08:28:15.867-03:00  INFO 9228 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : No active profile set, falling back to 1 default profile: "default"
+2025-10-15T08:28:16.432-03:00  INFO 9228 --- [Task Manager Backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-15T08:28:16.466-03:00  INFO 9228 --- [Task Manager Backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 28 ms. Found 2 JPA repository interfaces.
+2025-10-15T08:28:16.669-03:00  INFO 9228 --- [Task Manager Backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-15T08:28:16.677-03:00  INFO 9228 --- [Task Manager Backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-15T08:28:16.701-03:00  INFO 9228 --- [Task Manager Backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-15T08:28:16.703-03:00  INFO 9228 --- [Task Manager Backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-10-15T08:28:16.709-03:00  INFO 9228 --- [Task Manager Backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:ce9e7928-d105-48a6-96fe-1db0080c9a33 user=SA
+2025-10-15T08:28:16.711-03:00  INFO 9228 --- [Task Manager Backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-10-15T08:28:16.762-03:00  INFO 9228 --- [Task Manager Backend] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-10-14T13:57:59.950-03:00  INFO 27944 --- [Task Manager Backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-10-14T13:57:59.989-03:00  INFO 27944 --- [Task Manager Backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-10-14T13:58:00.192-03:00  WARN 27944 --- [Task Manager Backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-14T13:58:00.399-03:00  WARN 27944 --- [Task Manager Backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+2025-10-15T08:28:16.819-03:00  INFO 9228 --- [Task Manager Backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-15T08:28:16.882-03:00  INFO 9228 --- [Task Manager Backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-15T08:28:17.321-03:00  WARN 9228 --- [Task Manager Backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-15T08:28:17.870-03:00  WARN 9228 --- [Task Manager Backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 6a50618f-e5b6-489c-bac0-29c6d48dc53b
+Using generated security password: 9c8e2577-7f4a-4b9f-98f5-d81a18b4f9b6
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-10-14T13:58:00.402-03:00  INFO 27944 --- [Task Manager Backend] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-10-14T13:58:00.467-03:00  INFO 27944 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Started TaskManagerBackendApplicationTests in 1.329 seconds (process running for 18.942)
-2025-10-14T13:58:00.517-03:00  INFO 27944 --- [Task Manager Backend] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-10-14T13:58:00.518-03:00  INFO 27944 --- [Task Manager Backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown initiated...
-2025-10-14T13:58:00.520-03:00  INFO 27944 --- [Task Manager Backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown completed.
+2025-10-15T08:28:17.872-03:00  INFO 9228 --- [Task Manager Backend] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-10-15T08:28:17.965-03:00  INFO 9228 --- [Task Manager Backend] [main] c.e.t.TaskManagerBackendApplicationTests : Started TaskManagerBackendApplicationTests in 2.223 seconds (process running for 12.667)
+2025-10-15T08:28:18.527-03:00  INFO 9228 --- [Task Manager Backend] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-15T08:28:18.528-03:00  INFO 9228 --- [Task Manager Backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2025-10-15T08:28:18.530-03:00  INFO 9228 --- [Task Manager Backend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
