@@ -198,6 +198,121 @@ Este subtópico descreve como executar e testar o backend do Task Manager no **p
 
     - Seguindo essa sequência, é possível testar todos os endpoints do backend de forma confiável, garantindo que a aplicação esteja funcional no perfil de teste.
 
+## 🧪 How to Run Backend Locally
+
+### ⚙️ Perfil DEV Backend
+
+Este perfil é voltado para o ambiente de desenvolvimento local do backend. Ele permite que o desenvolvedor suba a aplicação Java conectada a um banco PostgreSQL em container Docker e valide os endpoints via Postman.
+
+#### ✅ Requisitos
+
+Antes de iniciar, garanta que possui instalado em seu ambiente:
+
+- **Docker Desktop**
+- **Java 17 ou superior**
+- **Maven 3.8+**
+- **Postman**
+- **Git** (para clonar o repositório, se aplicável)
+
+#### 🚀 Passo a Passo
+
+1. **Inicie o Docker Desktop**  
+   Certifique-se de que o Docker está ativo antes de executar qualquer comando.
+
+2. **Suba o banco de dados via Docker Compose**
+   ```bash
+   cd backend/
+   docker-compose up -d
+   ```
+
+3. **Verifique se o container foi iniciado corretamente**
+   ```bash
+   docker ps
+   ```
+   O container `task-manager-postgres` deve aparecer com o status `Up` e a porta `5433` mapeada.
+
+4. **Confirme se a porta está disponível (5433)**
+   - Se a porta já estiver em uso, encerre o serviço em conflito ou altere a configuração no `docker-compose.yml`.
+   - Caso a aplicação já esteja em execução, pare-a antes de subir novamente:
+     ```bash
+     mvn spring-boot:stop
+     ```
+
+5. **Execute o build da aplicação sem os testes automatizados**
+   ```bash
+   mvn clean install -DskipTests
+   ```
+
+6. **Inicie a aplicação no perfil DEV**
+   ```bash
+   mvn spring-boot:run -Dspring-boot.run.profiles=dev
+   ```
+
+   A aplicação deve iniciar e ficar acessível na URL:
+   ```
+   http://localhost:8080
+   ```
+
+7. **Verifique a conexão com o banco**
+   - Confirme se o banco foi populado com as tabelas `users` e `tasks`:
+     ```bash
+     docker exec -it task-manager-postgres psql -U postgres -d task_manager_db
+     \dt
+     ```
+   - O resultado deve listar:
+     ```
+     public | users | table | postgres
+     public | tasks | table | postgres
+     ```
+
+8. **Importe a collection do Postman**
+   - Abra o Postman.
+   - Vá em **File → Import** e selecione o arquivo da collection (`Task Manager.postman_collection.json`).
+
+9. **Siga a sequência lógica dos testes:**
+
+   1. **Login e autenticação**
+      - Endpoint: `POST /auth/login`
+      - Retorna o token JWT para as requisições seguintes.
+
+   2. **Listar usuários**
+      - Endpoint: `GET /users`
+      - Verifica se o usuário admin padrão está ativo.
+
+   3. **Criar um novo usuário**
+      - Endpoint: `POST /users`
+
+   4. **Criar tarefas**
+      - Endpoint: `POST /tasks`
+
+   5. **Listar tarefas**
+      - Endpoint: `GET /tasks`
+
+   6. **Atualizar tarefa**
+      - Endpoint: `PUT /tasks/{id}`
+
+   7. **Excluir tarefa**
+      - Endpoint: `DELETE /tasks/{id}`
+
+10. **Verifique logs e saídas da aplicação**
+   - Monitore o console Maven durante a execução.
+   - Logs de conexão com o banco e endpoints devem ser exibidos.
+
+#### 🧩 Dicas adicionais
+
+- Caso precise limpar o ambiente de containers:
+  ```bash
+  docker-compose down -v
+  ```
+- Para resetar o banco de dados e recomeçar os testes:
+  ```bash
+  docker exec -it task-manager-postgres psql -U postgres -c "DROP DATABASE task_manager_db;"
+  docker-compose up -d
+  ```
+
+- É possível depurar a aplicação diretamente em uma IDE como **IntelliJ** ou **VS Code**, configurando o mesmo perfil `dev`.
+
+
 
 ```bash
 
