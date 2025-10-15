@@ -45,26 +45,14 @@ Portfolio project showcasing a full-stack web application.
 - [ ] Video presentation
 - [ ] Publish project on UpWork
 
-## How to Run Backend Locally
-
-1. Make sure Docker is running.
-2. Start PostgreSQL container:
-   docker compose up -d
-
-3. Run backend (Spring Boot):
-   ./mvnw spring-boot:run
-
-4. Access API endpoints (e.g., login) at:
-   http://localhost:8081
-
 ### Next Steps / Roadmap
 ## Backend
 
-- [ ] Complete Task entity, repository, and service
+- [x] Complete Task entity, repository, and service
 
-- [ ] Create REST controllers for Task CRUD
+- [x] Create REST controllers for Task CRUD
 
-- [ ] Implement unit and integration tests
+- [x] Implement unit and integration tests
 
 - [ ] Add API documentation (Swagger / OpenAPI)
 
@@ -96,7 +84,7 @@ Portfolio project showcasing a full-stack web application.
 
 This README reflects the current status of the project and the next steps for completing the full-stack Task Manager App.
 
-## Como Testar
+## How to Run Backend Locally
 
 ### Perfil Teste Backend
 
